@@ -5,7 +5,7 @@ my $MTDIR = "/var/www/html";
 my $BACKUPDIR = "/root/backups";
 my $TARCMD = "/bin/tar czf";
 my $SQLDUMPCMD = "/usr/bin/mysqldump";
-my $VERSION = "1.7.1";
+my $VERSION = "1.8.0";
 my $OPTION_FILE = "/root/.wikibackuprc";
 my $LATESTFILE = "$BACKUPDIR/mediawiki.sql-1";
 my $DOSNAPSHOT = 0;
@@ -26,6 +26,8 @@ mediawiki
 changeme
 # Put database name here
 mediawiki
+# Website folder
+/var/www/html
 END_TEMPLATE
 
 
@@ -66,6 +68,10 @@ sub ReadPrefs
 		elsif ($LineCount == 2)
 		{
 			$MYSQLDBNAME = $row;
+		}
+		elsif ($LineCount == 3)
+		{
+			$MTDIR = $row;
 		}
 		$LineCount += 1;
 	}
