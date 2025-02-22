@@ -1,4 +1,4 @@
-# MediaWiki backup script (1.0.0)
+# MediaWiki backup script (1.8.0)
 Creates a backup of your MediaWiki installation and MySQL data
 
 Official support sites: [Official Github Repo](https://github.com/fstltna/WikiBackup)
@@ -15,4 +15,4 @@ Official support sites: [Official Github Repo](https://github.com/fstltna/WikiBa
 4. Edit the backup config:
  	Run a manual backup and it will ask you for the mysql config info. If you need to reconfigure it use the "-prefs" command-line option
 
-If you need more help visit https://wiki.gameplayer.club/
+If you need more help visit https://wikihosting.gameplayer.club/
