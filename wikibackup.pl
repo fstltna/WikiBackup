@@ -3,9 +3,9 @@
 # Set these for your situation
 my $MTDIR = "/var/www/html";
 my $BACKUPDIR = "/root/backups";
-my $TARCMD = "/bin/tar czf";
+my $TARCMD = "/bin/tar czhf";
 my $SQLDUMPCMD = "/usr/bin/mysqldump";
-my $VERSION = "1.8.0";
+my $VERSION = "1.8.1";
 my $OPTION_FILE = "/root/.wikibackuprc";
 my $LATESTFILE = "$BACKUPDIR/mediawiki.sql-1";
 my $DOSNAPSHOT = 0;
