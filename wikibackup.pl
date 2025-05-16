@@ -5,7 +5,7 @@ my $MTDIR = "/var/www/html";
 my $BACKUPDIR = "/root/backups";
 my $TARCMD = "/bin/tar czhf";
 my $SQLDUMPCMD = "/usr/bin/mysqldump";
-my $VERSION = "1.8.1";
+my $VERSION = "1.8.2";
 my $OPTION_FILE = "/root/.wikibackuprc";
 my $LATESTFILE = "$BACKUPDIR/mediawiki.sql-1";
 my $DOSNAPSHOT = 0;
@@ -98,7 +98,7 @@ sub DumpMysql
 {
 	my $DUMPFILE = $_[0];
 
-	print "Backing up MYSQL data: ";
+	print "Backup Completed.\nBacking up MYSQL data: ";
 	if (-f "$DUMPFILE")
 	{
 		unlink("$DUMPFILE");
