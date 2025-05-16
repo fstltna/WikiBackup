@@ -1,4 +1,4 @@
-# MediaWiki backup script (1.8.2)
+# MediaWiki backup script (1.9.0)
 Creates a backup of your MediaWiki installation and MySQL data
 
 Official support sites: [Official Github Repo](https://github.com/fstltna/WikiBackup)

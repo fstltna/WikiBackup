@@ -5,7 +5,7 @@ my $MTDIR = "/var/www/html";
 my $BACKUPDIR = "/root/backups";
 my $TARCMD = "/bin/tar czhf";
 my $SQLDUMPCMD = "/usr/bin/mysqldump";
-my $VERSION = "1.8.2";
+my $VERSION = "1.9.0";
 my $OPTION_FILE = "/root/.wikibackuprc";
 my $LATESTFILE = "$BACKUPDIR/mediawiki.sql-1";
 my $DOSNAPSHOT = 0;
@@ -98,14 +98,14 @@ sub DumpMysql
 {
 	my $DUMPFILE = $_[0];
 
-	print "Backup Completed.\nBacking up MYSQL data: ";
+	print "Backing up MYSQL data: ";
 	if (-f "$DUMPFILE")
 	{
 		unlink("$DUMPFILE");
 	}
 	# print "User = $MYSQLUSER, PSWD = $MYSQLPSWD\n";
-	system("$SQLDUMPCMD --user=$MYSQLUSER --password=$MYSQLPSWD --result-file=$DUMPFILE $MYSQLDBNAME");
-	print "\n";
+	system("$SQLDUMPCMD --user=$MYSQLUSER --password=$MYSQLPSWD --result-file=$DUMPFILE $MYSQLDBNAME 2> /dev/null");
+	print "Done\n";
 }
 
 if (defined $CMDOPTION)
@@ -119,20 +119,19 @@ if (defined $CMDOPTION)
 
 sub SnapShotFunc
 {
-	print "Backing up java files: ";
+	print "Creating New Backup: ";
 	if (-f "$BACKUPDIR/snapshot.tgz")
 	{
 		unlink("$BACKUPDIR/snapshot.tgz");
 	}
-	system("$TARCMD $BACKUPDIR/snapshot.tgz $MTDIR > /dev/null 2>\&1");
-	print "\nBackup Completed.\nBacking up MYSQL data: ";
+	system("$TARCMD $BACKUPDIR/snapshot.tgz $MTDIR 2>/dev/null");
+	print "Backup Completed.\n";
 	if (-f "$BACKUPDIR/snapshot.sql")
 	{
 		unlink("$BACKUPDIR/snapshot.sql");
 	}
 	# print "User = $MYSQLUSER, PSWD = $MYSQLPSWD\n";
 	DumpMysql("$BACKUPDIR/snapshot.sql");
-	print "\n";
 }
 
 #-------------------
@@ -197,12 +196,13 @@ while ($FileRevision > 0)
 }
 
 print "Done\nCreating New Backup: ";
-system("$TARCMD $BACKUPDIR/wikibackup-1.tgz $MTDIR");
-print "Done\nMoving Existing MySQL data: ";
+system("$TARCMD $BACKUPDIR/wikibackup-1.tgz $MTDIR 2>/dev/null");
+print "Done\nRemoving Existing MySQL data: ";
 if (-f "$BACKUPDIR/mediawiki.sql-5")
 {
 	unlink("$BACKUPDIR/mediawiki.sql-5") or warn "Could not unlink $BACKUPDIR/mediawiki.sql-5: $!";
 }
+print "Done\n";
 
 $FileRevision = 4;
 while ($FileRevision > 0)
@@ -216,5 +216,4 @@ while ($FileRevision > 0)
 }
 
 DumpMysql($LATESTFILE);
-print("Done!\n");
 exit 0;
