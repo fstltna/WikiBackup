@@ -78,17 +78,17 @@ sub ReadPrefs
 	close($fh);
 	if ($MYSQLUSER eq "")
 	{
-		print "Database username is empty - check the config file with \"wikibackup -prefs\"\n";
+		print "Database username is empty - check the config file with \"wikibackup prefs\"\n";
 		exit;
 	}
 	if ($MYSQLPSWD eq "")
 	{
-		print "Database password is empty - check the config file with \"wikibackup -prefs\"\n";
+		print "Database password is empty - check the config file with \"wikibackup prefs\"\n";
 		exit;
 	}
 	if ($MYSQLDBNAME eq "")
 	{
-		print "Database name is empty - check the config file with \"wikibackup -prefs\"\n";
+		print "Database name is empty - check the config file with \"wikibackup prefs\"\n";
 		exit;
 	}
 	# print "User = $MYSQLUSER, PSWD = $MYSQLPSWD\n";
@@ -151,7 +151,7 @@ if ($DOSNAPSHOT == -1)
 }
 print "==============================\n";
 
-if ((defined $CMDOPTION) && ($CMDOPTION eq "-prefs"))
+if ((defined $CMDOPTION) && ($CMDOPTION eq "prefs"))
 {
 	# Edit the prefs file
 	print "Editing the prefs file\n";
