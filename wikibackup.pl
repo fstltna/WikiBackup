@@ -104,34 +104,35 @@ sub DumpMysql
 		unlink("$DUMPFILE");
 	}
 	# print "User = $MYSQLUSER, PSWD = $MYSQLPSWD\n";
-	system("$SQLDUMPCMD --user=$MYSQLUSER --password=$MYSQLPSWD --result-file=$DUMPFILE $MYSQLDBNAME 2> /dev/null");
-	print "Done\n";
+	system("$SQLDUMPCMD --user=$MYSQLUSER --password=$MYSQLPSWD --result-file=$DUMPFILE $MYSQLDBNAME  > /dev/null 2>\&1");
+	#	print "Done\n";
 }
 
 if (defined $CMDOPTION)
 {
-	if (($CMDOPTION ne "-snapshot") && ($CMDOPTION ne "-prefs"))
+	if (($CMDOPTION ne "snapshot") && ($CMDOPTION ne "prefs"))
 	{
-		print "Unknown command line option: '$CMDOPTION'\nOnly allowed options are '-snapshot' and '-prefs'\n";
+		print "Unknown command line option: '$CMDOPTION'\nOnly allowed options are 'snapshot' and 'prefs'\n";
 		exit 0;
 	}
 }
 
 sub SnapShotFunc
 {
-	print "Creating New Backup: ";
+	print "Backing up wiki files: ";
 	if (-f "$BACKUPDIR/snapshot.tgz")
 	{
 		unlink("$BACKUPDIR/snapshot.tgz");
 	}
-	system("$TARCMD $BACKUPDIR/snapshot.tgz $MTDIR 2>/dev/null");
-	print "Backup Completed.\n";
+	system("$TARCMD $BACKUPDIR/snapshot.tgz $MTDIR > /dev/null 2>\&1");
+	print "Done\n";
 	if (-f "$BACKUPDIR/snapshot.sql")
 	{
 		unlink("$BACKUPDIR/snapshot.sql");
 	}
 	# print "User = $MYSQLUSER, PSWD = $MYSQLPSWD\n";
 	DumpMysql("$BACKUPDIR/snapshot.sql");
+	print "Done\n";
 }
 
 #-------------------
@@ -196,13 +197,12 @@ while ($FileRevision > 0)
 }
 
 print "Done\nCreating New Backup: ";
-system("$TARCMD $BACKUPDIR/wikibackup-1.tgz $MTDIR 2>/dev/null");
-print "Done\nRemoving Existing MySQL data: ";
+system("$TARCMD $BACKUPDIR/wikibackup-1.tgz $MTDIR  > /dev/null 2>\&1");
+print "Done\nMoving Existing MySQL data: ";
 if (-f "$BACKUPDIR/mediawiki.sql-5")
 {
 	unlink("$BACKUPDIR/mediawiki.sql-5") or warn "Could not unlink $BACKUPDIR/mediawiki.sql-5: $!";
 }
-print "Done\n";
 
 $FileRevision = 4;
 while ($FileRevision > 0)
@@ -215,5 +215,7 @@ while ($FileRevision > 0)
 	$FileRevision -= 1;
 }
 
+print "Done\n";
 DumpMysql($LATESTFILE);
+print("Done\n");
 exit 0;
